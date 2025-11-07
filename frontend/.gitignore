@@ -1,0 +1,103 @@
+# ================================
+# FRONTEND - NODE.JS/REACT
+# ================================
+
+# Dependencies - GARANTIZADO
+node_modules/
+/node_modules
+/frontend/node_modules
+*/node_modules
+**/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build outputs
+dist
+dist-ssr
+/frontend/dist
+/frontend/build
+*.local
+
+# Vite
+frontend/.vite/
+
+# Cache
+.npm
+.eslintcache
+.cache
+.parcel-cache
+
+# ================================
+# BACKEND - DJANGO/PYTHON
+# ================================
+
+# Virtual environments - GARANTIZADO
+venv/
+/venv
+/backend/venv
+*/venv
+**/venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Python cache
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+
+# Database
+*.sqlite3
+*.db
+
+# Django files
+backend/media/
+backend/staticfiles/
+
+# ================================
+# EDITOR & SISTEMA
+# ================================
+
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+
+# IntelliJ
+.idea
+
+# OS files
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ================================
+# ENVIRONMENT VARIABLES
+# ================================
+
+.env
+.env.local
+.env.production
+
+# ================================
+# TEMPORALES & BACKUPS
+# ================================
+
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
