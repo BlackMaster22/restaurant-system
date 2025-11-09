@@ -6,3 +6,4 @@ export { Select } from './Select';
 export { LoadingSpinner } from './LoadingSpinner';
 export { Card, CardHeader, CardContent } from './Card';
 export { Badge } from './Badge';
+export { ConfirmModal } from './ConfirmModal';

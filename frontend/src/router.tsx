@@ -6,6 +6,7 @@ import { Login } from './components/forms/Login';
 import { ProtectedRoute } from './components/layout/ProtectedRoute';
 
 export const router = createBrowserRouter([
+    // Rutas públicas - Accesibles sin autenticación
     {
         path: "/",
         element: <Navigate to="/menu" replace />,
@@ -18,10 +19,14 @@ export const router = createBrowserRouter([
         path: "/menu/:tableId",
         element: <CustomerMenu />,
     },
+
+    // Autenticación
     {
         path: "/login",
         element: <Login />,
     },
+
+    // Rutas protegidas - Camarero (requieren autenticación)
     {
         path: "/waiter",
         element: (
@@ -30,6 +35,8 @@ export const router = createBrowserRouter([
             </ProtectedRoute>
         ),
     },
+
+    // Rutas protegidas - Caja (requieren autenticación)
     {
         path: "/cashier",
         element: (
@@ -38,6 +45,8 @@ export const router = createBrowserRouter([
             </ProtectedRoute>
         ),
     },
+
+    // Rutas de error
     {
         path: "/unauthorized",
         element: (
