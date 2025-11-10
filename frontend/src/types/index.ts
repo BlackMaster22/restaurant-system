@@ -37,6 +37,8 @@ export interface MenuItem {
     category: number;
     category_name: string;
     image: string;
+    image_url: string;
+    image_thumbnail?: string;
     preparation_time: number;
     is_available: boolean;
     is_visible: boolean;

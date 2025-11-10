@@ -64,8 +64,22 @@ export const menuAPI = {
 
     getMenuItems: () => api.get('/menu/items/'),
     getMenuItem: (id: number) => api.get(`/menu/items/${id}/`),
-    createMenuItem: (data: any) => api.post('/menu/items/', data),
-    updateMenuItem: (id: number, data: any) => api.put(`/menu/items/${id}/`, data),
+
+    // ACTUALIZADO para usar FormData
+    createMenuItem: (data: FormData) =>
+        api.post('/menu/items/', data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }),
+
+    updateMenuItem: (id: number, data: FormData) =>
+        api.put(`/menu/items/${id}/`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }),
+
     deleteMenuItem: (id: number) => api.delete(`/menu/items/${id}/`),
 };
 

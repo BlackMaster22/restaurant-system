@@ -53,7 +53,7 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
         }
     };
 
-    const handleSave = async (data: any) => {
+    const handleSave = async (data: FormData) => {
         try {
             setLoading(true);
             if (editingProduct) {
@@ -73,10 +73,10 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
 
     const toggleProductAvailability = async (product: MenuItem) => {
         try {
-            await menuAPI.updateMenuItem(product.id, {
-                ...product,
-                is_available: !product.is_available
-            });
+            const formData = new FormData();
+            formData.append('is_available', (!product.is_available).toString());
+
+            await menuAPI.updateMenuItem(product.id, formData);
             onUpdate();
         } catch (error: any) {
             console.error('Error updating product:', error);
@@ -86,10 +86,10 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
 
     const toggleProductVisibility = async (product: MenuItem) => {
         try {
-            await menuAPI.updateMenuItem(product.id, {
-                ...product,
-                is_visible: !product.is_visible
-            });
+            const formData = new FormData();
+            formData.append('is_visible', (!product.is_visible).toString());
+
+            await menuAPI.updateMenuItem(product.id, formData);
             onUpdate();
         } catch (error: any) {
             console.error('Error updating product:', error);
@@ -208,16 +208,16 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
                                     <div className="flex flex-col space-y-1">
                                         <span
                                             className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${product.is_available
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : 'bg-red-100 text-red-800'
+                                                ? 'bg-green-100 text-green-800'
+                                                : 'bg-red-100 text-red-800'
                                                 }`}
                                         >
                                             {product.is_available ? '✅ Disponible' : '❌ No disponible'}
                                         </span>
                                         <span
                                             className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${product.is_visible
-                                                    ? 'bg-blue-100 text-blue-800'
-                                                    : 'bg-gray-100 text-gray-800'
+                                                ? 'bg-blue-100 text-blue-800'
+                                                : 'bg-gray-100 text-gray-800'
                                                 }`}
                                         >
                                             {product.is_visible ? '👁️ Visible' : '👁️‍🗨️ Oculto'}
@@ -232,8 +232,8 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
                                         <button
                                             onClick={() => toggleProductAvailability(product)}
                                             className={`p-2 rounded-lg transition-colors ${product.is_available
-                                                    ? 'text-orange-600 hover:bg-orange-50'
-                                                    : 'text-green-600 hover:bg-green-50'
+                                                ? 'text-orange-600 hover:bg-orange-50'
+                                                : 'text-green-600 hover:bg-green-50'
                                                 }`}
                                             title={product.is_available ? 'Marcar como no disponible' : 'Marcar como disponible'}
                                         >
@@ -243,8 +243,8 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
                                         <button
                                             onClick={() => toggleProductVisibility(product)}
                                             className={`p-2 rounded-lg transition-colors ${product.is_visible
-                                                    ? 'text-gray-600 hover:bg-gray-50'
-                                                    : 'text-blue-600 hover:bg-blue-50'
+                                                ? 'text-gray-600 hover:bg-gray-50'
+                                                : 'text-blue-600 hover:bg-blue-50'
                                                 }`}
                                             title={product.is_visible ? 'Ocultar del menú' : 'Mostrar en el menú'}
                                         >

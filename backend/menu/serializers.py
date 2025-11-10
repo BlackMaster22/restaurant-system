@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Category, MenuItem, CustomizationOption, CustomizationChoice
+from django.urls import reverse
 
 class CustomizationChoiceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,14 +17,28 @@ class CustomizationOptionSerializer(serializers.ModelSerializer):
 class MenuItemSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name', read_only=True)
     customization_options = CustomizationOptionSerializer(many=True, read_only=True)
-    
+    image_url = serializers.SerializerMethodField()
+    image_thumbnail = serializers.SerializerMethodField()
+
     class Meta:
         model = MenuItem
         fields = [
             'id', 'name', 'description', 'price', 'category', 'category_name',
-            'image', 'preparation_time', 'is_available', 'is_visible',
-            'allergens', 'customization_options', 'created_at', 'updated_at'
+            'image', 'image_url', 'image_thumbnail', 'preparation_time', 
+            'is_available', 'is_visible', 'allergens', 'customization_options', 
+            'created_at', 'updated_at'
         ]
+        read_only_fields = ['image_url', 'image_thumbnail']
+
+    def get_image_url(self, obj):
+        if obj.image:
+            return self.context['request'].build_absolute_uri(obj.image.url)
+        return None
+
+    def get_image_thumbnail(self, obj):
+        if obj.image:
+            return self.context['request'].build_absolute_uri(obj.image.url)
+        return None
 
 class CategorySerializer(serializers.ModelSerializer):
     menu_items = MenuItemSerializer(many=True, read_only=True)

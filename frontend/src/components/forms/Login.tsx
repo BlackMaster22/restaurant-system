@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../../stores/authStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export const Login: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -8,7 +8,7 @@ export const Login: React.FC = () => {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const { login, user } = useAuthStore();
+    const { login } = useAuthStore();
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -18,7 +18,8 @@ export const Login: React.FC = () => {
 
         try {
             await login(username, password);
-            // Redirigir según el rol del usuario
+            // Redirigir según el rol del usuario después del login
+            const user = await useAuthStore.getState().user;
             if (user) {
                 switch (user.profile.role) {
                     case 'waiter':
@@ -42,11 +43,13 @@ export const Login: React.FC = () => {
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Sistema de Restaurante
-                </h2>
+                <Link to="/" className="flex justify-center">
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                        Sistema de Restaurante
+                    </h2>
+                </Link>
                 <p className="mt-2 text-center text-sm text-gray-600">
-                    Inicia sesión en tu cuenta
+                    Acceso exclusivo para empleados
                 </p>
             </div>
 
@@ -110,13 +113,13 @@ export const Login: React.FC = () => {
                                 <div className="w-full border-t border-gray-300" />
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">Accesos de prueba</span>
+                                <Link
+                                    to="/"
+                                    className="px-2 bg-white text-primary-600 hover:text-primary-500"
+                                >
+                                    Volver al inicio
+                                </Link>
                             </div>
-                        </div>
-
-                        <div className="mt-4 grid grid-cols-1 gap-3 text-sm text-gray-600">
-                            <div><strong>Camarero:</strong> usuario: waiter, contraseña: password123</div>
-                            <div><strong>Caja:</strong> usuario: cashier, contraseña: password123</div>
                         </div>
                     </div>
                 </div>
