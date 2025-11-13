@@ -67,17 +67,10 @@ export const MenuItemList: React.FC<MenuItemListProps> = ({
                             <div className="flex space-x-2">
                                 <Button
                                     onClick={handleViewDetails}
-                                    variant="outline"
-                                    size="sm"
-                                >
-                                    Detalles
-                                </Button>
-                                <Button
-                                    onClick={handleViewDetails}
                                     variant="primary"
                                     size="sm"
                                 >
-                                    Agregar
+                                    Detalles
                                 </Button>
                             </div>
                         </div>

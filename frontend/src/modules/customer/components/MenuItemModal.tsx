@@ -41,10 +41,6 @@ export const MenuItemModal: React.FC<MenuItemModalProps> = ({
                 <p className="text-gray-700">{item.description}</p>
 
                 <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <h4 className="font-semibold text-gray-900 mb-2">Tiempo de preparación</h4>
-                        <p className="text-gray-600">{item.preparation_time} minutos</p>
-                    </div>
 
                     {item.allergens.length > 0 && (
                         <div>
@@ -97,14 +93,11 @@ export const MenuItemModal: React.FC<MenuItemModalProps> = ({
 
                 <div className="flex space-x-4 pt-4">
                     <Button
-                        onClick={onClose}
-                        variant="outline"
                         className="flex-1"
+                        onClick={onClose}
                     >
+                        
                         Cerrar
-                    </Button>
-                    <Button className="flex-1">
-                        Agregar al pedido
                     </Button>
                 </div>
             </div>

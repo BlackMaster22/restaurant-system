@@ -18,18 +18,18 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return User.objects.select_related('profile').all()
     
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def me(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
     
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def waiters(self, request):
         waiters = User.objects.filter(profile__role='waiter', profile__is_active=True)
         serializer = UserSerializer(waiters, many=True)
         return Response(serializer.data)
     
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def cashiers(self, request):
         cashiers = User.objects.filter(profile__role='cashier', profile__is_active=True)
         serializer = UserSerializer(cashiers, many=True)

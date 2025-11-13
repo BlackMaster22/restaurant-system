@@ -44,6 +44,7 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
             setLoading(true);
             await menuAPI.deleteMenuItem(productToDelete.id);
             onUpdate();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.error('Error deleting product:', error);
             alert(error.response?.data?.error || 'Error al eliminar el producto');
@@ -63,6 +64,7 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
             }
             setIsModalOpen(false);
             onUpdate();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.error('Error saving product:', error);
             alert(error.response?.data?.error || 'Error al guardar el producto');
@@ -74,26 +76,60 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
     const toggleProductAvailability = async (product: MenuItem) => {
         try {
             const formData = new FormData();
+
+            // Agregar todos los campos requeridos
+            formData.append('name', product.name);
+            formData.append('description', product.description);
+            formData.append('price', product.price.toString());
+            formData.append('category', product.category.toString());
+            formData.append('preparation_time', product.preparation_time.toString());
             formData.append('is_available', (!product.is_available).toString());
+            formData.append('is_visible', product.is_visible.toString());
+
+            // Si el producto tiene alergenos
+            if (product.allergens && product.allergens.length > 0) {
+                product.allergens.forEach(allergen => {
+                    formData.append('allergens', allergen);
+                });
+            }
 
             await menuAPI.updateMenuItem(product.id, formData);
             onUpdate();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-            console.error('Error updating product:', error);
-            alert(error.response?.data?.error || 'Error al actualizar el producto');
+            console.error('Error updating product availability:', error);
+            console.error('Error details:', error.response?.data);
+            alert(error.response?.data?.error || 'Error al actualizar la disponibilidad del producto');
         }
     };
 
     const toggleProductVisibility = async (product: MenuItem) => {
         try {
             const formData = new FormData();
+
+            // Agregar todos los campos requeridos
+            formData.append('name', product.name);
+            formData.append('description', product.description);
+            formData.append('price', product.price.toString());
+            formData.append('category', product.category.toString());
+            formData.append('preparation_time', product.preparation_time.toString());
+            formData.append('is_available', product.is_available.toString());
             formData.append('is_visible', (!product.is_visible).toString());
+
+            // Si el producto tiene alergenos
+            if (product.allergens && product.allergens.length > 0) {
+                product.allergens.forEach(allergen => {
+                    formData.append('allergens', allergen);
+                });
+            }
 
             await menuAPI.updateMenuItem(product.id, formData);
             onUpdate();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-            console.error('Error updating product:', error);
-            alert(error.response?.data?.error || 'Error al actualizar el producto');
+            console.error('Error updating product visibility:', error);
+            console.error('Error details:', error.response?.data);
+            alert(error.response?.data?.error || 'Error al actualizar la visibilidad del producto');
         }
     };
 
@@ -169,9 +205,6 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
                                 Estado
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Tiempo
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Acciones
                             </th>
                         </tr>
@@ -224,11 +257,9 @@ export const ProductManager: React.FC<ProductManagerProps> = ({
                                         </span>
                                     </div>
                                 </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {product.preparation_time} min
-                                </td>
+                                
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <div className="flex space-x-2">
+                                    <div className="flex space-x-2 overflow-x-auto bg-gray-100 rounded-lg p-1">
                                         <button
                                             onClick={() => toggleProductAvailability(product)}
                                             className={`p-2 rounded-lg transition-colors ${product.is_available
