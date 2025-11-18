@@ -1,14 +1,15 @@
 import React from 'react';
 
 interface TabNavigationProps {
-    activeTab: 'orders' | 'menu' | 'users';
-    onTabChange: (tab: 'orders' | 'menu' | 'users') => void;
+    activeTab: 'orders' | 'menu' | 'users' | 'economics';
+    onTabChange: (tab: 'orders' | 'menu' | 'users' | 'economics') => void;
 }
 
 const tabs = [
     { id: 'orders', name: 'Órdenes', icon: '📋' },
     { id: 'menu', name: 'Gestión de Menú', icon: '🍽️' },
     { id: 'users', name: 'Gestión de Usuarios', icon: '👥' },
+    { id: 'economics', name: 'Gestión Económica', icon: '📊' },
 ];
 
 export const TabNavigation: React.FC<TabNavigationProps> = ({

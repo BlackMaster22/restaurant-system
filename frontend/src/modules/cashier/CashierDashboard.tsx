@@ -4,9 +4,10 @@ import { TabNavigation } from './components/TabNavigation';
 import { OrdersPanel } from './components/OrdersPanel';
 import { MenuManagement } from './components/MenuManagement';
 import { UserManagement } from './components/UserManagement';
+import { EconomicsDashboard } from './components/economics/EconomicsDashboard';
 
 export const CashierDashboard: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<'orders' | 'menu' | 'users'>('orders');
+    const [activeTab, setActiveTab] = useState<'orders' | 'menu' | 'users' | 'economics'>('orders');
 
     const renderActiveTab = () => {
         switch (activeTab) {
@@ -16,6 +17,8 @@ export const CashierDashboard: React.FC = () => {
                 return <MenuManagement />;
             case 'users':
                 return <UserManagement />;
+            case 'economics':
+                return <EconomicsDashboard />;
             default:
                 return <OrdersPanel />;
         }

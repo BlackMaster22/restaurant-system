@@ -49,7 +49,13 @@ class OrderItem(models.Model):
     customizations = models.ManyToManyField(CustomizationChoice, blank=True)
 
     def save(self, *args, **kwargs):
-        # Calcular precio total
+        # Si es un objeto nuevo (no tiene ID), guardamos primero sin calcular precios
+        if self.pk is None:
+            # Guardar primero sin customizaciones para obtener un ID
+            super().save(*args, **kwargs)
+            return  # Salir temprano, los precios se calcularán después
+        
+        # Si ya tiene ID, calcular precios con customizaciones
         customization_extra = sum(choice.price_extra for choice in self.customizations.all())
         self.unit_price = self.menu_item.price + customization_extra
         self.total_price = self.unit_price * self.quantity
